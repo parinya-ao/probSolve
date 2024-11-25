@@ -1,0 +1,1 @@
+{"name":"Local: robot1000","url":"d:\\prob_solve\\01\\robot1000.cpp","tests":[{"id":1732516557649,"input":"NNEESW","output":""},{"id":1732516588086,"input":"NNEESWZEE","output":""},{"id":1732516605316,"input":"NWSSSSE","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\prob_solve\\01\\robot1000.cpp","group":"local","local":true}

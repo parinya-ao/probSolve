@@ -1,0 +1,10 @@
+{
+	"fileTemplates.associations": {
+		"*.cpp": "cpp"
+	},
+	"fileTemplates.templates": {
+		"cpp-template": {
+			"content": "#include <bits/stdc++.h>\nusing namespace std;\n\n#define fastio ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);\n#define ll long long\n#define ull unsigned long long\n#define pb push_back\n#define all(v) v.begin(), v.end()\n#define rall(v) v.rbegin(), v.rend()\n#define pii pair<int, int>\n#define vi vector<int>\n#define vll vector<long long>\n\n// Constants\nconst int MOD = 1e9+7;\nconst int INF = 1e9;\n\nvoid solve() {\n    // Write your solution here\n}\n\nint main() {\n    fastio;\n    int t = 1;\n    // cin >> t; // Uncomment if there are multiple test cases\n    while (t--) {\n        solve();\n    }\n    return 0;\n}\n"
+		}
+	}
+}

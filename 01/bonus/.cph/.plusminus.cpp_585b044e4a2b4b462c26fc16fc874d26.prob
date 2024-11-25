@@ -1,0 +1,1 @@
+{"name":"Local: plusminus","url":"d:\\prob_solve\\01\\bonus\\plusminus.cpp","tests":[{"id":1732519596202,"input":"6\n10 + 5 - 7 + 4 + 10 - 3","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\prob_solve\\01\\bonus\\plusminus.cpp","group":"local","local":true}
