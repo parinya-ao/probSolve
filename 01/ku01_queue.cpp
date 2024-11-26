@@ -1,6 +1,6 @@
 /**
  *   author: Parinya Aobaun
- *   created: 2024-11-26 15:28
+ *   created: 2024-11-26 15:43
  **/
 #pragma GCC optimize("Ofast,unroll-loops")
 #pragma GCC target("sse,sse2,sse3,ssse3,sse4,avx,avx2,fma")
@@ -68,42 +68,35 @@ ll mod_pow(ll base, ll exp, ll m = MOD)
   return res;
 }
 
-void findCycle(int node, vi &visited, vi &to, int &cycle_count)
-{
-  int current = node;
-  while (!visited[current])
-  {
-    visited[current] = 1;
-    current = to[current];
-  }
-  if (current == node)
-  {
-    cycle_count++;
-  }
-}
-
-signed main()
+int main()
 {
   fastio;
-  int n;
-  cin >> n;
+  int N, L;
+  cin >> N >> L;
 
-  vi to(n + 1);
-  for (int i = 1; i <= n; ++i)
+  vi q(N, 0);
+  for (int i = 0; i < N; i++)
   {
-    cin >> to[i];
+    cin >> q[i];
   }
 
-  vi visited(n + 1, 0);
-  int cycle_count = 0;
-  for (int i = 1; i <= n; ++i)
+  vi c(N, 0);
+  for (int i = 0; i < L; ++i)
   {
-    if (!visited[i])
+    cin >> c[i];
+  }
+
+  for (int i = 0; i < L; i++)
+  {
+    for (int j = 0; j < i; j++)
     {
-      findCycle(i, visited, to, cycle_count);
+      if (c[i] == 0)
+      {
+        cout << 0 << "\n";
+        break;
+      }
     }
   }
-  cout << cycle_count << "\n";
 
   return 0;
 }

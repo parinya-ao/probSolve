@@ -1,6 +1,6 @@
 /**
  *   author: Parinya Aobaun
- *   created: 2024-11-26 15:28
+ *   created: 2024-11-26 16:57
  **/
 #pragma GCC optimize("Ofast,unroll-loops")
 #pragma GCC target("sse,sse2,sse3,ssse3,sse4,avx,avx2,fma")
@@ -68,42 +68,45 @@ ll mod_pow(ll base, ll exp, ll m = MOD)
   return res;
 }
 
-void findCycle(int node, vi &visited, vi &to, int &cycle_count)
-{
-  int current = node;
-  while (!visited[current])
-  {
-    visited[current] = 1;
-    current = to[current];
-  }
-  if (current == node)
-  {
-    cycle_count++;
-  }
-}
-
-signed main()
+int main()
 {
   fastio;
-  int n;
-  cin >> n;
+#define n 3
 
-  vi to(n + 1);
-  for (int i = 1; i <= n; ++i)
+  int arr[3] = {0, 0, 0};
+
+  for (int i = 0; i < n; i++)
   {
-    cin >> to[i];
+    cin >> arr[i];
   }
 
-  vi visited(n + 1, 0);
-  int cycle_count = 0;
-  for (int i = 1; i <= n; ++i)
+  int a;
+  cin >> a;
+  unordered_map<int, int> m;
+  for (int i = 0; i < a; ++i)
   {
-    if (!visited[i])
-    {
-      findCycle(i, visited, to, cycle_count);
-    }
+    int num;
+    cin >> num;
+    m[num]++;
   }
-  cout << cycle_count << "\n";
+
+  int min_cost = INF;
+  for (const auto &item : m)
+  {
+    int type = item.first;
+    int count = item.second;
+    int cost = count * arr[type - 1];
+    chmin(min_cost, cost);
+  }
+
+  cout << min_cost;
+
+  // debug(min_cost);
+  // debug zone
+  // for (auto i : m)
+  // {
+  //   cout << i.fi << " " << i.se << "\n";
+  // }
 
   return 0;
 }
