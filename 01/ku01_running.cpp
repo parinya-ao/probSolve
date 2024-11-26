@@ -1,6 +1,6 @@
 /**
  *  Author: Parinya Aobaun
- *  Created: 2024-11-26 08:05
+ *  Created: 2024-11-26 08:28
  */
 
 #pragma GCC optimize("Ofast,unroll-loops")
@@ -81,42 +81,34 @@ long long mod_pow(long long base, long long exp, long long m = MOD)
   return res;
 }
 
-int countFeq(vector<int> vec)
-{
-  unordered_map<int, int> m;
-  for (auto itr = vec.begin(); itr != vec.end(); ++itr)
-  {
-    m[(*itr)]++;
-  }
-  int maxFeq = 0;
-  for (auto pair : m)
-  {
-    if (pair.second > maxFeq)
-    {
-      maxFeq = pair.second;
-    }
-  }
-  // debug
-  // for (auto itr : m)
-  // {
-  //   cout << itr.first << " " << itr.second << "\n";
-  // }
-  return maxFeq;
-}
-
 int main()
 {
   fast_io();
 
-  int n;
-  cin >> n;
-  vi vec(n, 0);
-  for (int i = 0; i < n; i++)
+  int n, k;
+  cin >> n >> k;
+
+  vi arr(n, 0);
+  int min_time = INF;
+  int max_time = 0;
+  for (int i = 0; i < n; ++i)
   {
-    cin >> vec[i];
+    cin >> arr[i];
+    chmin(min_time, arr[i]);
   }
 
-  cout << countFeq(vec);
+  max_time = min_time * k;
+
+  int count = 0;
+  // loop k รอบ
+  for (auto itr = arr.begin(), itd = arr.end(); itr != itd; ++itr)
+  {
+    if ((*itr) * k <= max_time)
+    {
+      count++;
+    }
+  }
+  cout << count << "\n";
 
   return 0;
 }
