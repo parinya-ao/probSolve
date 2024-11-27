@@ -1,6 +1,6 @@
 /**
  *   author: Parinya Aobaun
- *   created: 2024-11-27 13:27
+ *   created: 2024-11-27 17:41
  **/
 #pragma GCC optimize("Ofast,unroll-loops")
 #pragma GCC target("sse,sse2,sse3,ssse3,sse4,avx,avx2,fma")
@@ -73,57 +73,30 @@ signed main()
 {
   fastio;
 
-  int n, l;
-  cin >> n >> l;
-  vi N(n, 0), L(l, 0);
-  for (int i = 0; i < n; ++i)
+  int l, n;
+  cin >> l >> n;
+  int total = 0;
+  for (int i = 1; i <= l; ++i)
   {
-    cin >> N[i];
+    total += (pow(i, 2));
   }
-  for (int j = 0; j < l; ++j)
-  {
-    cin >> L[j];
-  }
+  // debug(total);
 
-  vi prefix_max(n, 0);
-  prefix_max[0] = N[0];
-  for (int i = 1; i < n; ++i)
-  {
-    prefix_max[i] = max(prefix_max[i - 1], N[i]);
-  }
+  int total_dis = total;
+  int level = l; // layer
 
-  for (int i = 0; i < l; ++i)
+  for (int i = l; i >= 1; --i)
   {
-    int pos = L[i] - 1;
-    if (pos < 0)
+    int layer = pow(i, 2);
+    if (n >= layer)
     {
-      cout << "0\n";
-      continue;
+      n -= layer;
+      total_dis -= layer;
+      --level;
     }
-    int max_before;
-    if (pos == 0)
-    {
-      max_before = -INF;
-    }
-    else
-    {
-      max_before = prefix_max[pos - 1];
-    }
-    int current_height = N[pos];
-    if (current_height > max_before)
-    {
-      cout << "0\n";
-    }
-    else if (current_height == max_before)
-    {
-      cout << "1\n";
-    }
-    else
-    {
-      cout << (max_before - current_height + 1) << "\n";
-    }
-    // debug(max_before)
   }
+  // debug(level);
+  cout << level << "\n";
 
   return 0;
 }

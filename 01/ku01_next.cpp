@@ -10,7 +10,7 @@ using namespace std;
 #define fastio                      \
   ios_base::sync_with_stdio(false); \
   cin.tie(NULL);                    \
-  cout.tie(NULL);
+  cout.tie(NULL)
 #define ll long long
 #define ull unsigned long long
 #define ld long double
@@ -68,17 +68,20 @@ ll mod_pow(ll base, ll exp, ll m = MOD)
   return res;
 }
 
-void findCycle(int node, vi &visited, vi &to, int &cycle_count)
+void findCycle(int node, vi &visited, vi &to, vll &cycle)
 {
   int current = node;
+  int length = 0;
+
   while (!visited[current])
   {
     visited[current] = 1;
     current = to[current];
+    length++;
   }
   if (current == node)
   {
-    cycle_count++;
+    cycle.emplace_back(length);
   }
 }
 
@@ -95,15 +98,20 @@ signed main()
   }
 
   vi visited(n + 1, 0);
-  int cycle_count = 0;
+  vll cycle;
   for (int i = 1; i <= n; ++i)
   {
     if (!visited[i])
     {
-      findCycle(i, visited, to, cycle_count);
+      findCycle(i, visited, to, cycle);
     }
   }
-  cout << cycle_count << "\n";
+  int ans = 1;
+  for (auto len : cycle)
+  {
+    ans = lcm(ans, len);
+  }
+  cout << ans << "\n";
 
   return 0;
 }

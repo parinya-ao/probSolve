@@ -1,6 +1,9 @@
+/*
+LANG: C++
+*/
 /**
  *   author: Parinya Aobaun
- *   created: 2024-11-27 13:27
+ *   created: 2024-11-27 17:59
  **/
 #pragma GCC optimize("Ofast,unroll-loops")
 #pragma GCC target("sse,sse2,sse3,ssse3,sse4,avx,avx2,fma")
@@ -28,7 +31,6 @@ using namespace std;
 #define uset unordered_set
 #define fi first
 #define se second
-// Debugging macros
 #define debug(x) cerr << #x << " = " << (x) << endl;
 #define debugv(v)      \
   cerr << #v << " = "; \
@@ -36,23 +38,19 @@ using namespace std;
     cerr << i << " ";  \
   cerr << endl;
 
-// Constants
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll LINF = 1e18;
 const ld EPS = 1e-9;
 
-// Utility Functions
 template <typename T>
 bool chmin(T &a, T b) { return b < a ? a = b, true : false; }
 template <typename T>
 bool chmax(T &a, T b) { return b > a ? a = b, true : false; }
 
-// GCD and LCM
 ll gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 ll lcm(ll a, ll b) { return a / gcd(a, b) * b; }
 
-// Modular Arithmetic
 ll mod_add(ll a, ll b, ll m = MOD) { return (a + b) % m; }
 ll mod_sub(ll a, ll b, ll m = MOD) { return (a - b + m) % m; }
 ll mod_mul(ll a, ll b, ll m = MOD) { return (a * b) % m; }
@@ -73,56 +71,82 @@ signed main()
 {
   fastio;
 
-  int n, l;
-  cin >> n >> l;
-  vi N(n, 0), L(l, 0);
-  for (int i = 0; i < n; ++i)
+  int n, t;
+  cin >> n >> t;
+  vi input(n);
+  for (int i = 0; i < n; i++)
   {
-    cin >> N[i];
-  }
-  for (int j = 0; j < l; ++j)
-  {
-    cin >> L[j];
+    cin >> input[i];
   }
 
-  vi prefix_max(n, 0);
-  prefix_max[0] = N[0];
-  for (int i = 1; i < n; ++i)
+  vi X(n), Y(n), Z(n);
+
+  if (t == 1)
   {
-    prefix_max[i] = max(prefix_max[i - 1], N[i]);
+    Y = input;
+    int P_Y = n;
+    for (int i = 0; i < n; ++i)
+    {
+      int D = Y[i] - P_Y;
+      if (D == 1)
+        X[i] = 1;
+      else if (D == -1)
+        X[i] = 0;
+      else
+        return 1;
+      P_Y = Y[i];
+    }
+  }
+  else if (t == 2)
+  {
+    Z = input;
+    Y[0] = Z[0];
+    for (int i = 1; i < n; ++i)
+    {
+      ll Z_i = Z[i];
+      ll P_Y = Y[i - 1];
+      ll Y_i;
+
+      Y_i = Z_i - 2 * P_Y;
+      if (Y_i > P_Y)
+      {
+        Y[i] = Y_i;
+      }
+      else
+      {
+        Y_i = Z_i - P_Y;
+        if (Y_i <= P_Y)
+        {
+          Y[i] = Y_i;
+        }
+        else
+        {
+          return 1;
+        }
+      }
+    }
+
+    int P_Y_final = n;
+    for (int i = 0; i < n; ++i)
+    {
+      int D = Y[i] - P_Y_final;
+      if (D == 1)
+        X[i] = 1;
+      else if (D == -1)
+        X[i] = 0;
+      else
+        return 1;
+      P_Y_final = Y[i];
+    }
+  }
+  else
+  {
+    return 1;
   }
 
-  for (int i = 0; i < l; ++i)
+  for (auto x : X)
   {
-    int pos = L[i] - 1;
-    if (pos < 0)
-    {
-      cout << "0\n";
-      continue;
-    }
-    int max_before;
-    if (pos == 0)
-    {
-      max_before = -INF;
-    }
-    else
-    {
-      max_before = prefix_max[pos - 1];
-    }
-    int current_height = N[pos];
-    if (current_height > max_before)
-    {
-      cout << "0\n";
-    }
-    else if (current_height == max_before)
-    {
-      cout << "1\n";
-    }
-    else
-    {
-      cout << (max_before - current_height + 1) << "\n";
-    }
-    // debug(max_before)
+    cout << x << "\n";
   }
 
   return 0;

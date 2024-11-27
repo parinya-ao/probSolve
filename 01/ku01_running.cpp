@@ -1,114 +1,102 @@
 /**
- *  Author: Parinya Aobaun
- *  Created: 2024-11-26 08:28
- */
-
+ *   author: Parinya Aobaun
+ *   created: 2024-11-27 08:32
+ **/
 #pragma GCC optimize("Ofast,unroll-loops")
 #pragma GCC target("sse,sse2,sse3,ssse3,sse4,avx,avx2,fma")
-
 #include <bits/stdc++.h>
 using namespace std;
 
-// Fast I/O
-inline void fast_io()
-{
-  ios::sync_with_stdio(false);
-  cin.tie(nullptr);
-  cout.tie(nullptr);
-}
-
-// Type aliases
-using ll = long long;
-using pii = pair<int, int>;
-using vi = vector<int>;
-using vll = vector<long long>;
+#define fastio                      \
+  ios_base::sync_with_stdio(false); \
+  cin.tie(NULL);                    \
+  cout.tie(NULL);
+#define int long long
+#define ll long long
+#define ull unsigned long long
+#define ld long double
+#define pb push_back
+#define pf push_front
+#define mp make_pair
+#define all(v) v.begin(), v.end()
+#define rall(v) v.rbegin(), v.rend()
+#define pii pair<int, int>
+#define pll pair<ll, ll>
+#define vi vector<int>
+#define vll vector<ll>
+#define umap unordered_map
+#define uset unordered_set
+#define fi first
+#define se second
+// Debugging macros
+#define debug(x) cerr << #x << " = " << (x) << endl;
+#define debugv(v)      \
+  cerr << #v << " = "; \
+  for (auto &i : v)    \
+    cerr << i << " ";  \
+  cerr << endl;
 
 // Constants
-constexpr int MOD = 1000000007;
-constexpr int INF = 1000000000;
-constexpr long long LINF = 1000000000000000000;
-constexpr double EPS = 1e-9;
+const int MOD = 1e9 + 7;
+const int INF = 1e9;
+const ll LINF = 1e18;
+const ld EPS = 1e-9;
 
-// Utility functions
+// Utility Functions
 template <typename T>
-bool chmin(T &a, const T &b)
-{
-  if (b < a)
-  {
-    a = b;
-    return true;
-  }
-  return false;
-}
-
+bool chmin(T &a, T b) { return b < a ? a = b, true : false; }
 template <typename T>
-bool chmax(T &a, const T &b)
-{
-  if (b > a)
-  {
-    a = b;
-    return true;
-  }
-  return false;
-}
+bool chmax(T &a, T b) { return b > a ? a = b, true : false; }
 
 // GCD and LCM
-long long gcd_custom(long long a, long long b)
-{
-  return b ? gcd_custom(b, a % b) : a;
-}
-
-long long lcm_custom(long long a, long long b)
-{
-  return a / gcd_custom(a, b) * b;
-}
+ll gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
+ll lcm(ll a, ll b) { return a / gcd(a, b) * b; }
 
 // Modular Arithmetic
-long long mod_add(long long a, long long b, long long m = MOD) { return (a + b) % m; }
-long long mod_sub(long long a, long long b, long long m = MOD) { return (a - b + m) % m; }
-long long mod_mul(long long a, long long b, long long m = MOD) { return (a * b) % m; }
-long long mod_pow(long long base, long long exp, long long m = MOD)
+ll mod_add(ll a, ll b, ll m = MOD) { return (a + b) % m; }
+ll mod_sub(ll a, ll b, ll m = MOD) { return (a - b + m) % m; }
+ll mod_mul(ll a, ll b, ll m = MOD) { return (a * b) % m; }
+ll mod_pow(ll base, ll exp, ll m = MOD)
 {
-  long long res = 1;
-  base %= m;
-  while (exp > 0)
+  ll res = 1;
+  while (exp)
   {
     if (exp & 1)
-      res = mod_mul(res, base, m);
-    base = mod_mul(base, base, m);
+      res = (res * base) % m;
+    base = (base * base) % m;
     exp >>= 1;
   }
   return res;
 }
 
-int main()
+signed main()
 {
-  fast_io();
+  fastio;
 
   int n, k;
   cin >> n >> k;
 
-  vi arr(n, 0);
-  int min_time = INF;
-  int max_time = 0;
+  vi vec(n, 0);
   for (int i = 0; i < n; ++i)
   {
-    cin >> arr[i];
-    chmin(min_time, arr[i]);
+    cin >> vec[i];
   }
 
-  max_time = min_time * k;
+  sort(all(vec));
+  vec[0] *= k;
+  int min_val = vec[0];
 
+  // debugv(vec);
   int count = 0;
-  // loop k รอบ
-  for (auto itr = arr.begin(), itd = arr.end(); itr != itd; ++itr)
+  for (int i = 1; i < n; ++i)
   {
-    if ((*itr) * k <= max_time)
+    if (min_val <= vec[i] * (k - 1))
     {
-      count++;
+
+      ++count;
     }
   }
-  cout << count << "\n";
-
+  // debug(n - count);
+  cout << n - count << "\n";
   return 0;
 }

@@ -110,3 +110,4 @@ int main()
 
   return 0;
 }
+// write a function to calculate fcatorial
