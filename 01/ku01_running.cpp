@@ -85,9 +85,8 @@ signed main()
   sort(all(vec));
   vec[0] *= k;
   int min_val = vec[0];
-
-  // debugv(vec);
   int count = 0;
+
   for (int i = 1; i < n; ++i)
   {
     if (min_val <= vec[i] * (k - 1))
