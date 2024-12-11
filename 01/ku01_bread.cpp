@@ -1,6 +1,6 @@
 /**
  *  Author: Parinya Aobaun
- *  Created: 2024-12-11 08:00
+ *  Created: 2024-12-10 18:57
  **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -63,31 +63,35 @@ void _print(T t, V... v)
 signed main()
 {
   fastio;
-  int n, k;
-  cin >> n >> k;
-  vector<int> vec(n);
-  for (auto &i : vec)
+  int w, h, m, n;
+  cin >> w >> h >> m >> n;
+  vector<int> W(m), H(n);
+  for (int &x : W)
   {
-    cin >> i;
+    cin >> x;
   }
+  vector<int> WCUT(m + 1), HCUT(n + 1);
+  WCUT[0] = W[0] - 0;
+  for (int i = 1; i < W.size(); ++i)
+  {
+    WCUT[i] = min(W[i], w) - W[i - 1];
+  }
+  WCUT[w] = w;
+  sort(all(WCUT));
+  for (int &x : H)
+  {
+    cin >> x;
+  }
+  HCUT[0] = H[0] - 0;
+  for (int i = 1; i < H.size(); ++i)
+  {
+    HCUT[i] = min(H[i], h) - H[i - 1];
+  }
+  WCUT.emplace_back(H);
+  sort(all(HCUT));
 
-  int num;
-  while (k--)
-  {
-    cin >> num;
-    int left = 0, right = 0, SUM = 0, MAX = 0;
-    for (right = 0; right < n; ++right)
-    {
-      SUM += vec[right];
-      while (left <= right && SUM > num)
-      {
-        SUM -= vec[left];
-        left++;
-      }
-      MAX = max(right - left + 1, MAX);
-    }
-    cout << MAX << "\n";
-  }
+  debug(WCUT);
+  debug(HCUT);
 
   return 0;
 }
