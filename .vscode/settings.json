@@ -98,7 +98,16 @@
 		"string_view": "cpp",
 		"ranges": "cpp",
 		"span": "cpp",
-		"stacktrace": "cpp"
+		"stacktrace": "cpp",
+		"any": "cpp",
+		"barrier": "cpp",
+		"coroutine": "cpp",
+		"source_location": "cpp",
+		"latch": "cpp",
+		"numbers": "cpp",
+		"semaphore": "cpp",
+		"syncstream": "cpp",
+		"variant": "cpp"
 	},
 	"C_Cpp.errorSquiggles": "enabled"
 }
