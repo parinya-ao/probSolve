@@ -79,7 +79,8 @@ void init()
   {
     cin >> a >> b;
     a--;
-    b--;
+    dfdfd
+        b--;
     add(a, b);
   }
 }
