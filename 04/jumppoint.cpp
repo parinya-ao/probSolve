@@ -86,5 +86,5 @@ int main()
 {
   read_input();
   build_graph();
-  cout << bfs(0);
+  cout << bfs(0) << "\n";
 }

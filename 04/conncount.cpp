@@ -76,8 +76,7 @@ signed main()
   int result = 0;
   for (int i = 1; i <= n; ++i)
   {
-    if (!visited[i])
-    {
+    if (!visited[i]){
       bfs(i);
       result++;
     }
