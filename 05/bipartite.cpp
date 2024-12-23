@@ -1,6 +1,6 @@
 /**
  *  Author: Parinya Aobaun
- *  Created: 2024-12-22 18:52
+ *  Created: 2024-12-23 12:30
  **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -58,16 +58,62 @@ void print(const T &x)
   cerr << "[" << #x << "] = ["; \
   _print(x)
 
+int K, M, N;
+int u, v;
+
+void solve()
+{
+  cin >> N >> M;
+  vector<vector<int>> adj(N);
+
+  for (int i = 0; i < M; i++)
+  {
+    cin >> u >> v;
+    u--;
+    v--;
+    adj[u].emplace_back(v);
+    adj[v].emplace_back(u);
+  }
+  // bfs
+  queue<int> q;
+  vector<int> layer(N, -1);
+  for (int i = 0; i < N; i++)
+  {
+    // if don't check
+    if (layer[i] == -1)
+    {
+      layer[i] = 0; // check
+      q.push(i);
+      while (!q.empty())
+      {
+        int u = q.front();
+        q.pop();
+        for (auto v : adj[u])
+        {
+          if (layer[v] == -1)
+          {
+            layer[v] = 1 - layer[u];
+            q.push(v);
+          }
+          else if (layer[v] == layer[u])
+          {
+            cout << "no" << "\n";
+            return;
+          }
+        }
+      }
+    }
+  }
+  cout << "yes\n";
+}
+
 signed main()
 {
   fastio;
-  const int n = 10;
-  vector<vector<int>> adj1(n);
-  vector<int> adj2[n];
-
-  print(adj1);
-  cout << "\n hello world" << "\n";
-  print(adj2);
-
+  cin >> K;
+  while (K--)
+  {
+    solve();
+  }
   return 0;
 }

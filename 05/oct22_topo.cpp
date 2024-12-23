@@ -1,6 +1,6 @@
 /**
  *  Author: Parinya Aobaun
- *  Created: 2024-12-22 18:52
+ *  Created: 2024-12-23 13:07
  **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -58,16 +58,67 @@ void print(const T &x)
   cerr << "[" << #x << "] = ["; \
   _print(x)
 
+int N, M;
+
 signed main()
 {
   fastio;
-  const int n = 10;
-  vector<vector<int>> adj1(n);
-  vector<int> adj2[n];
+  cin >> N >> M;
+  vector<vector<int>> adj(N);
+  for (int i = 0; i < M; i++)
+  {
+    int u, v;
+    cin >> u >> v;
+    u--;
+    v--;
+    adj[u].emplace_back(v);
+  }
 
-  print(adj1);
-  cout << "\n hello world" << "\n";
-  print(adj2);
+  queue<int> q;
+  vector<int> result;
+  vector<int> indegree(N, 0);
+  // count degreee
+  for (int i = 0; i < N; i++)
+  {
+    for (auto u : adj[i])
+    {
+      indegree[u]++;
+    }
+  }
+  // push graph first topol
+  for (int i = 0; i < N; i++)
+  {
+    if (indegree[i] == 0)
+    {
+      q.push(i);
+    }
+  }
+  // bfs
+  while (!q.empty())
+  {
+    int u = q.front();
+    q.pop();
+    result.emplace_back(u);
+    for (auto v : adj[u])
+    {
+      indegree[v]--;
+      if (indegree[v] == 0)
+      {
+        q.push(v);
+      }
+    }
+  }
+  if (result.size() != N)
+  {
+    cout << "no\n";
+  }
+  else
+  {
+    for (auto i : result)
+    {
+      cout << 1 + i << "\n";
+    }
+  }
 
   return 0;
 }
