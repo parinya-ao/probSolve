@@ -107,7 +107,8 @@
 		"numbers": "cpp",
 		"semaphore": "cpp",
 		"syncstream": "cpp",
-		"variant": "cpp"
+		"variant": "cpp",
+		"cstdbool": "cpp"
 	},
 	"C_Cpp.errorSquiggles": "enabled"
 }
