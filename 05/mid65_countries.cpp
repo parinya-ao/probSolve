@@ -1,6 +1,6 @@
 /**
  *  Author: Parinya Aobaun
- *  Created: 2025-01-19 19:07
+ *  Created: 2025-01-19 20:28
  **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -53,79 +53,38 @@ void print(const T &x)
   }
   cerr << "]";
 }
+
 #define debug(x...)             \
   cerr << "[" << #x << "] = ["; \
   _print(x)
+int Row, Col, A, B, X, Y;
 
-vector<int> solve(vector<vector<int>> &adj, vector<int> &wh, vector<int> &fc)
+vector<pair<int, int>> arr = {
+    {0, 1},
+    {1, 0},
+    {-1, 0},
+    {0, -1}};
+
+int solve(vector<vector<int>> &map, int startx, int starty, int endx, int endy)
 {
-  int n = adj.size();
-  vector<int> dist(n, -1);
-  queue<int> q;
-  // view all warehouses
-  for (auto w : wh)
-  {
-    dist[w] = 0;
-    q.push(w);
-  }
-  while (!q.empty())
-  {
-    int u = q.front();
-    q.pop();
-    for (auto v : adj[u])
-    {
-      if (dist[v] == -1)
-      {
-        dist[v] = dist[u] + 1;
-        q.push(v);
-      }
-    }
-  }
-  vector<int> result(fc.size());
-  for (int i = 0; i < fc.size(); i++)
-  {
-    result[i] = dist[fc[i]];
-  }
-  return result;
+  int startC = map[startx][starty - 1];
 }
 
 signed main()
 {
   fastio;
-  int N, M, S, T;
-  cin >> N >> M >> S >> T;
-  // create graph
-  vector<vector<int>> adj(N + 1);
-  int s, t;
-  for (int i = 0; i < M; i++)
-  {
-    cin >> s >> t;
-    adj[s].emplace_back(t);
-    adj[t].emplace_back(s);
-  }
-  // warehouse
-  vector<int> wh(S);
+  cin >> Row >> Col >> A >> B >> X >> Y;
+  vector<vector<int>> vec(Row, vector<int>(Col, 0));
   int num;
-  for (int i = 0; i < S; i++)
+  for (int i = 0; i < Row; i++)
   {
-    cin >> num;
-    wh[i] = num;
+    for (int j = 0; j < Col; j++)
+    {
+      cin >> num;
+      cin >> vec[i][j];
+    }
   }
-
-  // factory
-  vector<int> fc(T);
-  for (int i = 0; i < T; i++)
-  {
-    cin >> num;
-    fc[i] = num;
-  }
-
-  // solve code
-  vector<int> result = solve(adj, wh, fc);
-  for (auto ans : result)
-  {
-    cout << ans << "\n";
-  }
+  print(vec);
 
   return 0;
 }
