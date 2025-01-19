@@ -1,6 +1,6 @@
 /**
  *  Author: Parinya Aobaun
- *  Created: 2025-01-19 19:07
+ *  Created: 2025-01-19 16:13
  **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -61,6 +61,28 @@ void print(const T &x)
 signed main()
 {
   fastio;
+  int n, L;
+  cin >> n >> L;
+  vector<pair<int, int>> vec(n); // total line
+
+  for (int i = 0; i < n; i++)
+  {
+    cin >> vec[i].first >> vec[i].second;
+  }
+
+  int ans = 1;
+  int End = vec[0].first + L;
+  int i = 0;
+  while (i < n)
+  {
+    if (vec[i].second > End)
+    {
+      ans++;
+      End = vec[i].first + L;
+    }
+    i++;
+  }
+  cout << ans << "\n";
 
   return 0;
 }
