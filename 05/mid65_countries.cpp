@@ -65,26 +65,78 @@ vector<pair<int, int>> arr = {
     {-1, 0},
     {0, -1}};
 
-int solve(vector<vector<int>> &map, int startx, int starty, int endx, int endy)
+bool canMove(vector<vector<int>> &map, int &ROW, int &COL)
 {
-  int startC = map[startx][starty - 1];
+  int R = map.size();
+  int C = map[0].size();
+  if (ROW >= 0 && ROW < R && COL >= 0 && COL < C)
+  {
+    return true;
+  }
+  return false;
+}
+
+int solve(vector<vector<int>> &map, int starty, int startx, int endy, int endx)
+{
+  int R = map.size();
+  int C = map[0].size();
+
+  vector<vector<int>> visted(R, vector<int>(C, LLONG_MAX));
+  queue<pair<int, int>> q;
+  q.push({starty, startx});
+  visted[starty][startx] = 0; // not visited
+
+  while (!q.empty())
+  {
+    auto [y, x] = q.front();
+    q.pop();
+    int visas = visted[y][x];
+    if (x == endx && y == endy)
+    {
+      return visas;
+    }
+    for (auto &i : arr)
+    {
+      int newY = y + i.first;
+      int newX = x + i.second;
+
+      if (canMove(map, newY, newX))
+      {
+        int new_visa = visas;
+        // diff
+        if (map[newY][newX] != map[y][x])
+        {
+          ++new_visa;
+        }
+        // same
+        if (new_visa < visted[newY][newX])
+        {
+          visted[newY][newX] = new_visa;
+          q.push({newY, newX});
+        }
+      }
+    }
+  }
 }
 
 signed main()
 {
   fastio;
   cin >> Row >> Col >> A >> B >> X >> Y;
+  A--;
+  B--;
+  X--;
+  Y--;
   vector<vector<int>> vec(Row, vector<int>(Col, 0));
-  int num;
   for (int i = 0; i < Row; i++)
   {
     for (int j = 0; j < Col; j++)
     {
-      cin >> num;
       cin >> vec[i][j];
     }
   }
-  print(vec);
+  int ans = solve(vec, A, B, X, Y);
+  cout << ans;
 
   return 0;
 }
