@@ -142,14 +142,6 @@ int solve(int startx, int starty, int endx, int endy, vector<string> &map)
             dist[rr][cc][1] = dist[r][c][dig] + 2;
             q.push({rr, cc, 1});
           }
-
-          rr = newr;
-          cc = newc + d.second;
-          if (cc >= 0 && cc < Colmun && map[rr][cc] == '.' && dist[rr][cc][1] == 1e9)
-          {
-            dist[rr][cc][1] = dist[r][c][dig] + 2;
-            q.push({rr, cc, 1});
-          }
         }
       }
     }
