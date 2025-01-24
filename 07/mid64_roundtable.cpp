@@ -23,7 +23,7 @@ int main()
     // Calculate required shift for each dish
     int s = (F[j] - (j + 1) + N) % N; // O(1) per iteration
     freq[s]++;                        // O(1) per iteration
-  } // Total: O(N)
+  }                                   // Total: O(N)
 
   // Find the maximum frequency
   int max_matches = 0;

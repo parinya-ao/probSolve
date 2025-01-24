@@ -95,44 +95,28 @@ bool canMove(vector<string> &map, int x, int y)
 // Function to solve the problem using BFS
 int solve(int startx, int starty, int endx, int endy, vector<string> &map)
 {
-  // 3D distance array: dist[r][c][usedDig]
-  // usedDig = 0 -> dig not used yet
-  // usedDig = 1 -> dig has been used
-  // Initialize all distances to a large value (e.g., 1e9)
   vector<vector<vector<int>>> dist(Row, vector<vector<int>>(Colmun, vector<int>(2, 1e9)));
-
-  // BFS queue: stores tuples of (row, column, usedDig)
   queue<tuple<int, int, int>> q;
-
-  // Initialize starting position
   dist[startx][starty][0] = 0;
   q.push({startx, starty, 0});
-
-  // BFS implementation
   while (!q.empty())
   {
     auto [r, c, dig] = q.front();
     q.pop();
-
-    // If destination is reached, return the distance
     if (r == endx && c == endy)
     {
       return dist[r][c][dig];
     }
 
-    // Explore all four directions
     for (auto &d : arr)
     {
       int newr = r + d.first;
       int newc = c + d.second;
-
-      // Check if the new position is within bounds and valid
       if (canMove(map, newr, newc) && dist[newr][newc][dig] == 1e9)
       {
-        // **Case 1: Normal Move to '.'**
         if (map[newr][newc] == '.')
         {
-          dist[newr][newc][dig] = dist[r][c][dig] + 1; // Increment distance by 1 step
+          dist[newr][newc][dig] = dist[r][c][dig] + 1;
           q.push({newr, newc, dig});
         }
         // **Case 2: Encounter '*' and haven't used dig yet**
