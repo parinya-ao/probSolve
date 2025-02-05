@@ -1,73 +1,86 @@
-// C++ program to find the prime numbers
-// between a given interval
 #include <bits/stdc++.h>
+//#include <iostream>
+//#include <vector>
+//#include <set>
+//#include <algorithm>
+//#include <climits>
+
 using namespace std;
 
-// Function to implement the
-// Sieve of Eratosthenes to find primes up to 'n'
-vector<bool> sieveOfEratosthenes(int n)
+const int INF = 1e9;
+
+class Graph
 {
+  int n;                              // Number of vertices
+  vector<vector<pair<int, int>>> adj; // Adjacency list: {vertex, weight}
 
-  // Create a boolean array "prime[0..n]"
-  // and initialize all entries as true.
-  // A value in prime[i] will be false
-  // if 'i' is not prime, otherwise true.
-  vector<bool> prime(n + 1, true);
+public:
+  Graph(int n) : n(n), adj(n) {}
 
-  // Mark 0 and 1 as non-prime
-  prime[0] = false;
-  prime[1] = false;
-
-  // Loop through numbers from 2 to sqrt(n)
-  // to mark their multiples as non-prime
-  for (int p = 2; p * p <= n; p++)
+  void addEdge(int a, int b, int w)
   {
+    // Convert to 0-based indexing
+    a--;
+    b--;
+    adj[a].push_back({b, w});
+    adj[b].push_back({a, w});
+  }
 
-    // If prime[p] is still true, it means 'p' is prime
-    if (prime[p] == true)
+  vector<int> dijkstra(int start)
+  {
+    vector<int> dist(n, INF);
+    vector<bool> visited(n, false);
+    set<pair<int, int>> pq; // {distance, vertex}
+
+    dist[start] = 0;
+    pq.insert({0, start});
+
+    while (!pq.empty())
     {
+      int u = pq.begin()->second;
+      pq.erase(pq.begin());
 
-      // Mark all multiples of p greater
-      // than or equal to p^2 as non-prime
-      // Numbers less than p^2 would
-      // have already been marked as non-prime
-      for (int i = p * p; i <= n; i += p)
-        prime[i] = false;
+      if (visited[u])
+        continue;
+      visited[u] = true;
+
+      for (auto &edge : adj[u])
+      {
+        int v = edge.first;
+        int w = edge.second;
+
+        if (dist[v] > dist[u] + w)
+        {
+          dist[v] = dist[u] + w;
+          pq.insert({dist[v], v});
+        }
+      }
     }
+    return dist;
   }
-
-  return prime;
-}
-
-// Function to find all prime numbers in the range [m, n]
-vector<int> primeRange(int m, int n)
-{
-
-  // Get the boolean array representing prime
-  // numbers up to n
-  vector<bool> isPrime = sieveOfEratosthenes(n);
-  vector<int> ans;
-
-  for (int i = m; i <= n; i++)
-  {
-
-    // If 'i' is prime, add it to the result list
-    if (isPrime[i])
-      ans.push_back(i);
-  }
-
-  return ans;
-}
+};
 
 int main()
 {
+  ios_base::sync_with_stdio(false);
+  cin.tie(0);
 
-  int m = 1, n = 10;
+  int n, m;
+  cin >> n >> m;
 
-  vector<int> ans = primeRange(m, n);
+  Graph graph(n);
 
-  for (auto &i : ans)
-    cout << i << " ";
+  for (int i = 0; i < m; i++)
+  {
+    int a, b, w;
+    cin >> a >> b >> w;
+    graph.addEdge(a, b, w);
+  }
+
+  vector<int> distances = graph.dijkstra(0); // Start from vertex 0
+
+  // Print distance to last vertex
+  cout << distances[n - 1] << '\n';
 
   return 0;
 }

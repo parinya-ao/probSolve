@@ -1,2 +1,7 @@
 .cph
 *.exe
+
+*.txt
+*.out
+test
+*.vscode
