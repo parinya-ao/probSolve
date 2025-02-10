@@ -1,86 +1,65 @@
+/**
+ *  Author: Parinya Aobaun
+ **/
 #include <bits/stdc++.h>
-//#include <iostream>
-//#include <vector>
-//#include <set>
-//#include <algorithm>
-//#include <climits>
-
 using namespace std;
 
-const int INF = 1e9;
+#define fastio                 \
+  ios::sync_with_stdio(false); \
+  cin.tie(NULL);
+#define int long long
+#define all(v) v.begin(), v.end()
+#define INF LLONG_MAX
+#define MAX_N 10010
+void _print() { cerr << "]\n"; }
+template <typename T, typename V>
+void print(const pair<T, V> &p);
+template <typename T>
+void print(const T &x);
 
-class Graph
+void print(int x) { cerr << x; }
+void print(long x) { cerr << x; }
+void print(unsigned x) { cerr << x; }
+void print(unsigned long x) { cerr << x; }
+void print(unsigned long long x) { cerr << x; }
+void print(float x) { cerr << x; }
+void print(double x) { cerr << x; }
+void print(long double x) { cerr << x; }
+void print(char x) { cerr << '\'' << x << '\''; }
+void print(const char *x) { cerr << '"' << x << '"'; }
+void print(const string &x) { cerr << '"' << x << '"'; }
+void print(bool x) { cerr << (x ? "true" : "false"); }
+
+template <typename T, typename V>
+void print(const pair<T, V> &p)
 {
-  int n;                              // Number of vertices
-  vector<vector<pair<int, int>>> adj; // Adjacency list: {vertex, weight}
+  cerr << "{";
+  print(p.first);
+  cerr << ", ";
+  print(p.second);
+  cerr << "}";
+}
 
-public:
-  Graph(int n) : n(n), adj(n) {}
-
-  void addEdge(int a, int b, int w)
-  {
-    // Convert to 0-based indexing
-    a--;
-    b--;
-    adj[a].push_back({b, w});
-    adj[b].push_back({a, w});
-  }
-
-  vector<int> dijkstra(int start)
-  {
-    vector<int> dist(n, INF);
-    vector<bool> visited(n, false);
-    set<pair<int, int>> pq; // {distance, vertex}
-
-    dist[start] = 0;
-    pq.insert({0, start});
-
-    while (!pq.empty())
-    {
-      int u = pq.begin()->second;
-      pq.erase(pq.begin());
-
-      if (visited[u])
-        continue;
-      visited[u] = true;
-
-      for (auto &edge : adj[u])
-      {
-        int v = edge.first;
-        int w = edge.second;
-
-        if (dist[v] > dist[u] + w)
-        {
-          dist[v] = dist[u] + w;
-          pq.insert({dist[v], v});
-        }
-      }
-    }
-    return dist;
-  }
-};
-
-int main()
+template <typename T>
+void print(const T &x)
 {
-  ios_base::sync_with_stdio(false);
-  cin.tie(0);
-
-  int n, m;
-  cin >> n >> m;
-
-  Graph graph(n);
-
-  for (int i = 0; i < m; i++)
+  int f = 0;
+  cerr << "[";
+  for (auto &i : x)
   {
-    int a, b, w;
-    cin >> a >> b >> w;
-    graph.addEdge(a, b, w);
+    if (f++)
+      cerr << ", ";
+    print(i);
   }
-
-  vector<int> distances = graph.dijkstra(0); // Start from vertex 0
-
-  // Print distance to last vertex
-  cout << distances[n - 1] << '\n';
+  cerr << "]";
+}
+#define debug(x...)             \
+  cerr << "[" << #x << "] = ["; \
+  _print(x)
+signed main()
+{
+  fastio;
+  cout << "hell world" <<"\n";
 
   return 0;
 }
