@@ -1,110 +1,63 @@
-/**
- *  Author: Parinya Aobaun
- **/
 #include <bits/stdc++.h>
+
 using namespace std;
 
-#define fastio                 \
-  ios::sync_with_stdio(false); \
-  cin.tie(NULL);
-#define int long long
-#define all(v) v.begin(), v.end()
-#define INF LLONG_MAX
-#define MAX_N 10010
-void _print() { cerr << "]\n"; }
-template <typename T, typename V>
-void print(const pair<T, V> &p);
-template <typename T>
-void print(const T &x);
-
-void print(int x) { cerr << x; }
-void print(long x) { cerr << x; }
-void print(unsigned x) { cerr << x; }
-void print(unsigned long x) { cerr << x; }
-void print(unsigned long long x) { cerr << x; }
-void print(float x) { cerr << x; }
-void print(double x) { cerr << x; }
-void print(long double x) { cerr << x; }
-void print(char x) { cerr << '\'' << x << '\''; }
-void print(const char *x) { cerr << '"' << x << '"'; }
-void print(const string &x) { cerr << '"' << x << '"'; }
-void print(bool x) { cerr << (x ? "true" : "false"); }
-
-template <typename T, typename V>
-void print(const pair<T, V> &p)
-{
-  cerr << "{";
-  print(p.first);
-  cerr << ", ";
-  print(p.second);
-  cerr << "}";
-}
-
-template <typename T>
-void print(const T &x)
-{
-  int f = 0;
-  cerr << "[";
-  for (auto &i : x)
-  {
-    if (f++)
-      cerr << ", ";
-    print(i);
-  }
-  cerr << "]";
-}
-#define debug(x...)             \
-  cerr << "[" << #x << "] = ["; \
-  _print(x)
-
-class solve
+class Solve
 {
 private:
-  int n;
-  vector<int> p;
-  vector<int> m;
+    int n;
+    vector<int> vec;
+    vector<int> memo;
 
 public:
-  solve(int _n)
-  {
-    n = _n;
-    p.resize(n);
-    m.resize(n);
-    fill(all(m), 0);
-  }
-
-  void init()
-  {
-    for (int i = 0; i < n; i++)
+    Solve()
     {
-      cin >> p[i];
+        input();
+        // getAns();
     }
-  }
-
-  int getAns()
-  {
-    for (int i = 4; i < n; i++)
+    void input()
     {
-      for (int j = i - 4; j >= 0; j--)
-      {
-        int maxVal = *max_element(p.begin() + j, p.begin() + i + 1);
-        int prev = (j > 0 ? m[j - 1] : 0);
-        m[i] = max(m[i], prev + maxVal);
-      }
+        cin >> n;
+        vec.resize(n);
+        for (int i = 0; i < n; i++)
+        {
+            cin >> vec[i];
+        }
+        memo.resize(n);
+        memo.assign(n, -1);
     }
-    return m[n - 1];
-  }
+    int getmax(int l, int r)
+    {
+        int mx = -39123;
+        for (int i = l; i <= r; ++i)
+        {
+            mx = max(vec[i], mx);
+        }
+        return mx;
+    }
+    int dp(int i)
+    {
+        if (i < 5)
+            return 0;
+        if (memo[i] != -1)
+            return memo[i];
+
+        int best = 0;
+        for (int k = 5; k < i; k++)
+        {
+            best = max(best, dp(i - k) + getmax(i - k + 1, i));
+        }
+        return best;
+    }
+    int getAns()
+    {
+        return dp(n - 1);
+    }
 };
 
-signed main()
+int main()
 {
-  fastio;
-  int n;
-  cin >> n;
-  solve a(n);
-  a.init();
-
-  cout << a.getAns();
-
-  return 0;
-}
+    Solve result;
+    cout << result.getAns();
+    return 0;
+};
