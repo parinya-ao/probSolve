@@ -57,31 +57,48 @@ void print(const T &x)
   cerr << "[" << #x << "] = ["; \
   _print(x)
 
-string x, y;
-
-/*
-dp[i][j] = min(
-    dp[i-1][j-1] + (X[i-1] == Y[j-1] ? 0 : 1),  // Match/mismatch
-    dp[i][j-1] + 1,                             // Gap in X
-    dp[i-1][j] + 1                              // Gap in Y
-)
-*/
-vector<vector<int>> dp(450, vector<int>(450, 0));
-int solve(string x, string y)
+struct point
 {
-  int len_x = x.length();
-  int len_y = y.length();
+  int start;
+  int stop;
+};
 
-  for (int i = 0; i < len_x; i++)
-  {
-    dp[]
-  }
-}
+int n, limit;
+int a, b;
+vector<point> vec;
 
 signed main()
 {
   fastio;
-  cin >> x >> y;
+  cin >> n >> limit;
+
+  for (int i = 0; i < n; i++)
+  {
+    cin >> a >> b;
+    if (b > limit)
+    {
+      cout << -1;
+      return 0;
+    }
+    int l = max(1LL, a - (limit - b));
+    int r = a + limit - b;
+    vec.push_back({l, r});
+  }
+
+  sort(vec.begin(), vec.end(), [](const point &a, const point &b)
+       { return a.stop < b.stop; });
+
+  int ans = 0;
+  int current_point = -INF;
+  for (int i = 0; i < vec.size(); i++)
+  {
+    if (current_point < vec[i].start)
+    {
+      ans++;
+      current_point = vec[i].stop;
+    }
+  }
+  cout << ans << "\n";
 
   return 0;
 }

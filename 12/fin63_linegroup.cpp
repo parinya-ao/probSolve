@@ -57,31 +57,69 @@ void print(const T &x)
   cerr << "[" << #x << "] = ["; \
   _print(x)
 
-string x, y;
-
-/*
-dp[i][j] = min(
-    dp[i-1][j-1] + (X[i-1] == Y[j-1] ? 0 : 1),  // Match/mismatch
-    dp[i][j-1] + 1,                             // Gap in X
-    dp[i-1][j] + 1                              // Gap in Y
-)
-*/
-vector<vector<int>> dp(450, vector<int>(450, 0));
-int solve(string x, string y)
+class solve
 {
-  int len_x = x.length();
-  int len_y = y.length();
+private:
+  vector<int> m;
+  int n;
+  vector<int> dynamic_position;
+  vector<int> best;
 
-  for (int i = 0; i < len_x; i++)
+public:
+  solve(int __n)
   {
-    dp[]
+    n = __n;
+    dynamic_position.assign(n + 1, INF);
+    best.assign(n + 1, INF);
+    m.resize(n);
+    dynamic_position[0] = 0;
+    init_input();
+    cout << getAns();
   }
-}
+  void init_input()
+  {
+    for (int i = 0; i < n; i++)
+    {
+      cin >> m[i];
+    }
+  }
+  int getAns()
+  {
+    for (int i = 2; i <= n; i++)
+    {
+      for (int j = 2; j <= min(i, 10LL); ++j)
+      {
+        int Gmin = INF;
+        int Gmax = -INF;
+
+        for (int k = i - j; k < i; k++)
+        {
+          Gmin = min(Gmin, m[k]);
+          Gmax = max(Gmax, m[k]);
+        }
+        int s = Gmax - Gmin;
+
+        if (dynamic_position[i - j] + s < dynamic_position[i])
+        {
+          dynamic_position[i] = dynamic_position[i - j] + s;
+          best[i] = j;
+        }
+        else
+        {
+          // do noting kub jan
+        }
+      }
+    }
+    return dynamic_position[n];
+  }
+};
 
 signed main()
 {
   fastio;
-  cin >> x >> y;
+  int n;
+  cin >> n;
+  solve ans(n);
 
   return 0;
 }

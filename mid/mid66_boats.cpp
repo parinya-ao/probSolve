@@ -57,31 +57,41 @@ void print(const T &x)
   cerr << "[" << #x << "] = ["; \
   _print(x)
 
-string x, y;
-
-/*
-dp[i][j] = min(
-    dp[i-1][j-1] + (X[i-1] == Y[j-1] ? 0 : 1),  // Match/mismatch
-    dp[i][j-1] + 1,                             // Gap in X
-    dp[i-1][j] + 1                              // Gap in Y
-)
-*/
-vector<vector<int>> dp(450, vector<int>(450, 0));
-int solve(string x, string y)
-{
-  int len_x = x.length();
-  int len_y = y.length();
-
-  for (int i = 0; i < len_x; i++)
-  {
-    dp[]
-  }
-}
+int n, m;
+vector<int> boats;
+vector<int> human;
 
 signed main()
 {
   fastio;
-  cin >> x >> y;
+  cin >> n >> m;
+  boats.assign(n, INF);
+  human.assign(m, INF);
+  for (int i = 0; i < n; i++)
+  {
+    cin >> boats[i];
+  }
+  for (int i = 0; i < m; i++)
+  {
+    cin >> human[i];
+  }
+
+  print(boats);
+  sort(boats.begin(), boats.end());
+  // print(human);
+  int ans = 0;
+  for (int i = 0; i < m; i++)
+  {
+    auto itr = lower_bound(boats.begin(), boats.end(), human[i]);
+    if (itr == boats.end())
+    {
+      break;
+    }
+    int give_boat = *itr;
+    boats.erase(itr);
+    ++ans;
+  }
+  cout << ans;
 
   return 0;
 }

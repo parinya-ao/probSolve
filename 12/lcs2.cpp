@@ -57,31 +57,65 @@ void print(const T &x)
   cerr << "[" << #x << "] = ["; \
   _print(x)
 
-string x, y;
-
-/*
-dp[i][j] = min(
-    dp[i-1][j-1] + (X[i-1] == Y[j-1] ? 0 : 1),  // Match/mismatch
-    dp[i][j-1] + 1,                             // Gap in X
-    dp[i-1][j] + 1                              // Gap in Y
-)
-*/
-vector<vector<int>> dp(450, vector<int>(450, 0));
-int solve(string x, string y)
+string s, t;
+void solve(string s, string t)
 {
-  int len_x = x.length();
-  int len_y = y.length();
+  int n = s.length();
+  int m = t.length();
 
-  for (int i = 0; i < len_x; i++)
+  vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+
+  for (int i = 1; i <= n; i++)
   {
-    dp[]
+    for (int j = 1; j <= m; j++)
+    {
+      // iam start from 1 i is -1
+      // พิจารณาจากตัวแรก
+      // recurence relation คือ max(1+dp(i-1,j-1), dp(i-1, j), dp(i, j-1)) จะพิจารณา
+      // 1+dp(i-1, j-1) เมื่อ s[i-1] == t[j-1]
+      if (s[i - 1] == t[j - 1])
+      {
+        dp[i][j] = dp[i - 1][j - 1] + 1;
+      }
+      else
+      {
+        dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+      }
+    }
+  }
+  cout << dp[n][m] << "\n";
+  vector<char> ans;
+  int i = n, j = m;
+  while (i != 0 and j != 0)
+  {
+    if (s[i - 1] == t[j - 1])
+    {
+      ans.push_back(s[i - 1]);
+      i--;
+      j--;
+    }
+    else if (dp[i - 1][j] >= dp[i][j - 1])
+    {
+      i--;
+    }
+    else
+    {
+      j--;
+    }
+  }
+  for (int a = ans.size() - 1; a >= 0; a--)
+  {
+    cout << ans[a];
   }
 }
 
 signed main()
 {
   fastio;
-  cin >> x >> y;
+  cin >> s;
+  cin >> t;
+
+  solve(s, t);
 
   return 0;
 }

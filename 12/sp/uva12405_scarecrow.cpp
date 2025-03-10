@@ -57,31 +57,51 @@ void print(const T &x)
   cerr << "[" << #x << "] = ["; \
   _print(x)
 
-string x, y;
-
-/*
-dp[i][j] = min(
-    dp[i-1][j-1] + (X[i-1] == Y[j-1] ? 0 : 1),  // Match/mismatch
-    dp[i][j-1] + 1,                             // Gap in X
-    dp[i-1][j] + 1                              // Gap in Y
-)
-*/
-vector<vector<int>> dp(450, vector<int>(450, 0));
-int solve(string x, string y)
+int solve(int n, string s)
 {
-  int len_x = x.length();
-  int len_y = y.length();
-
-  for (int i = 0; i < len_x; i++)
+  int count = 0;
+  vector<bool> cover;
+  cover.resize(s.length());
+  for (int i = 0; i < s.length(); i++)
   {
-    dp[]
+    if (s[i] == '.' && !cover[i])
+    {
+      count++;
+      cover[i] = true;
+      if (i + 1 < n)
+      {
+        cover[i + 1] = true;
+      }
+      if (i + 2 < n)
+      {
+        cover[i + 2] = true;
+      }
+    }
   }
+  return count;
 }
 
 signed main()
 {
   fastio;
-  cin >> x >> y;
+  int n;
+  cin >> n;
+  for (int i = 1; i <= n; i++)
+  {
+    int u = 0;
+    string s;
+    cin >> u;
+    cin >> s;
+    int ans = solve(u, s);
+    if (i == n)
+    {
+      cout << "Count " << i << ": " << ans;
+    }
+    else
+    {
+      cout << "Count " << i << ": " << ans << "\n";
+    }
+  }
 
   return 0;
 }

@@ -57,31 +57,55 @@ void print(const T &x)
   cerr << "[" << #x << "] = ["; \
   _print(x)
 
-string x, y;
-
-/*
-dp[i][j] = min(
-    dp[i-1][j-1] + (X[i-1] == Y[j-1] ? 0 : 1),  // Match/mismatch
-    dp[i][j-1] + 1,                             // Gap in X
-    dp[i-1][j] + 1                              // Gap in Y
-)
-*/
-vector<vector<int>> dp(450, vector<int>(450, 0));
-int solve(string x, string y)
-{
-  int len_x = x.length();
-  int len_y = y.length();
-
-  for (int i = 0; i < len_x; i++)
-  {
-    dp[]
-  }
-}
-
+int n, m;
+list<int> vec;
 signed main()
 {
   fastio;
-  cin >> x >> y;
+  cin >> n >> m;
+  vec.assign(n, -INF);
+  auto it = vec.begin();
+  for (int i = 0; i < n; i++, ++it)
+  {
+    cin >> *it;
+  }
+
+  auto itr = vec.begin();
+  for (int i = 1; i <= m; i++)
+  {
+    int op;
+    cin >> op;
+    if (op == 1)
+    {
+      itr = vec.begin();
+    }
+    else if (op == 2)
+    {
+      ++itr;
+      if (itr == vec.end())
+      {
+        itr = vec.begin();
+      }
+    }
+    else if (op == 3)
+    {
+      int num;
+      cin >> num;
+      vec.insert(itr, num);
+    }
+    else if (op == 4)
+    {
+      int num;
+      cin >> num;
+      auto next_pos = itr;
+      ++next_pos;
+      vec.insert(next_pos, num);
+    }
+  }
+  for (auto val : vec)
+  {
+    cout << val << "\n";
+  }
 
   return 0;
 }

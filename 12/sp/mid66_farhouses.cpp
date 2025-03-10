@@ -57,31 +57,34 @@ void print(const T &x)
   cerr << "[" << #x << "] = ["; \
   _print(x)
 
-string x, y;
-
-/*
-dp[i][j] = min(
-    dp[i-1][j-1] + (X[i-1] == Y[j-1] ? 0 : 1),  // Match/mismatch
-    dp[i][j-1] + 1,                             // Gap in X
-    dp[i-1][j] + 1                              // Gap in Y
-)
-*/
-vector<vector<int>> dp(450, vector<int>(450, 0));
-int solve(string x, string y)
-{
-  int len_x = x.length();
-  int len_y = y.length();
-
-  for (int i = 0; i < len_x; i++)
-  {
-    dp[]
-  }
-}
+vector<int> vec;
+int n, l, k;
 
 signed main()
 {
   fastio;
-  cin >> x >> y;
+  cin >> n >> l >> k;
+  vec.assign(n, INF);
+  for (int i = 0; i < n; i++)
+  {
+    cin >> vec[i];
+  }
+
+  sort(all(vec));
+  // print(vec);
+  int max_diff = -INF;
+  for (int i = 0; i < n; i++)
+  {
+    if (i + k + l < n)
+    {
+      max_diff = max(max_diff, vec[i + k + l] - vec[i]);
+    }
+    else
+    {
+      break;
+    }
+  }
+  cout << max_diff;
 
   return 0;
 }
